@@ -11,7 +11,7 @@ from schema import JobsQuery
 app = FastAPI()
 
 
-@app.get('/get')
+@app.get('/')
 async def root(): 
     return {'message': 'hello world!'}
 

@@ -64,7 +64,7 @@ class JobPublisher(CloudAMQPHelper):
         
         await self.set_or_create_exchange_and_queue()
 
-        channel = self.get_channel()
+        channel = await self.get_channel()
 
         channel.basic_publish(
             exchange=self.Config.EXCHANGE_NAME, 
@@ -74,7 +74,7 @@ class JobPublisher(CloudAMQPHelper):
 
         print ("Info: Message sent to consumer")
 
-        self.close_connection()
+        # self.close_connection()
 
 
 
