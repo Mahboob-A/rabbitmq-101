@@ -25,8 +25,8 @@ class CloudAMQPHelper:
         channel = self.__connection.channel()
         return channel 
     
-    async def __get_or_create_exchange_and_queue_helper(self) -> None: 
-        channel = await self.__get_channel_helper()
+    async def __set_or_create_exchange_and_queue_helper(self) -> None: 
+        channel = await self.get_channel()
 
         # declare exchange 
         channel.exchange_declare(
@@ -47,8 +47,8 @@ class CloudAMQPHelper:
         )
 
     # methods to interact from child class 
-    async def get_or_create_exchange_and_queue(self): 
-        await self.__get_or_create_exchange_and_queue_helper()
+    async def set_or_create_exchange_and_queue(self): 
+        await self.__set_or_create_exchange_and_queue_helper()
     
     async def get_channel(self): 
         return await self.__get_channel_helper()
@@ -62,7 +62,7 @@ class JobPublisher(CloudAMQPHelper):
     
     async def publish_jobs(self, data) -> None: 
         
-        await self.get_or_create_exchange_and_queue()
+        await self.set_or_create_exchange_and_queue()
 
         channel = self.get_channel()
 
@@ -78,7 +78,8 @@ class JobPublisher(CloudAMQPHelper):
 
 
 
-
+# if __name__ == '__main__': 
+cloudamqp_jobpublisher = JobPublisher()
 
 
 
@@ -112,7 +113,7 @@ class JobPublisher(CloudAMQPHelper):
 
 # d = Demo()
 
-print(d.test())
+# print(d.test())
 
 
 
